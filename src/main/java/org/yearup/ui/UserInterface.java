@@ -1,6 +1,7 @@
 package org.yearup.ui;
 
 import org.yearup.datastorages.DealershipFileManager;
+import org.yearup.models.Contract;
 import org.yearup.models.Dealership;
 import org.yearup.models.Vehicle;
 
@@ -44,6 +45,7 @@ public class UserInterface
                     case 7 -> processGetAllVehicles();
                     case 8 -> processAddVehicle();
                     case 9 -> processDeleteVehicle();
+                    case 0 -> processSaleOrLeaseVehicle();
                     case 99 ->
                     { // exit
                         fileManager.saveDealership(dealership);
@@ -60,6 +62,7 @@ public class UserInterface
         }
 
     }
+
 
     public String getUserInputString(String message)
     {
@@ -93,6 +96,7 @@ public class UserInterface
         System.out.println("\t 7) List all vehicles");
         System.out.println("\t 8) Add vehicle");
         System.out.println("\t 9) Remove vehicle");
+        System.out.println("\t 0) Sell/Lease vehicle");
         System.out.println("\t 99) Exit");
 
     }
@@ -273,4 +277,10 @@ public class UserInterface
         dealership.removeVehicle(vehicle);
         System.out.printf("Vehicle %d was successfully removed.\n", vin);
     }
+
+    private void processSaleOrLeaseVehicle()
+    {
+        ArrayList<Contract> contracts = new ArrayList<>();
+    }
+
 }

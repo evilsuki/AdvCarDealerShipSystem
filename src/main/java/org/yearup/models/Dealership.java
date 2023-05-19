@@ -8,7 +8,7 @@ public class Dealership
     private String address;
     private String phone;
 
-    private ArrayList<Vehicle> vehicles;
+    private final ArrayList<Vehicle> vehicles;
 
     public Dealership(String name, String address, String phone)
     {

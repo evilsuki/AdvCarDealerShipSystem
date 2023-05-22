@@ -2,14 +2,18 @@ package org.yearup.models;
 
 public class SalesContract extends Contract
 {
+    private final double carPrice = getVehicleSoldInfo().getPrice();
+    private final String isFinanced;
+    private double saleTax;
+    private double recordFee;
+    private double processFee;
 
-    public SalesContract(String contractDate, String customerName, String customerEmail, Vehicle vehicleSoldInfo)
+
+    public SalesContract(String contractDate, String customerName, String customerEmail, Vehicle vehicleSoldInfo, String isFinanced)
     {
         super(contractDate, customerName, customerEmail, vehicleSoldInfo);
+        this.isFinanced = isFinanced;
     }
-
-    private final double carPrice = getVehicleSoldInfo().getPrice();
-    private String isFinanced;
 
 
     public double getSaleTax()
@@ -40,7 +44,7 @@ public class SalesContract extends Contract
 
     public String isFinanced()
     {
-        if (isFinanced.equalsIgnoreCase("yes"))
+        if (isFinanced.equalsIgnoreCase("yes") || isFinanced.equalsIgnoreCase("y"))
         {
             return "YES";
         }

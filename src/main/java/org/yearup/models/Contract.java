@@ -1,5 +1,7 @@
 package org.yearup.models;
 
+import java.util.ArrayList;
+
 public abstract class Contract
 {
     private String contractDate;
@@ -8,6 +10,7 @@ public abstract class Contract
     private Vehicle vehicleSoldInfo;
     private double totalPrice;
     private double monthlyPayment;
+//    private final ArrayList<Contract> contracts;
 
     public Contract(String contractDate, String customerName, String customerEmail, Vehicle vehicleSoldInfo)
     {
@@ -15,6 +18,8 @@ public abstract class Contract
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSoldInfo = vehicleSoldInfo;
+
+//        this.contracts = new ArrayList<>();
     }
 
 
@@ -57,6 +62,11 @@ public abstract class Contract
     {
         this.vehicleSoldInfo = vehicleSoldInfo;
     }
+
+//    public void addContract(Contract contract)
+//    {
+//        contracts.add(contract);
+//    }
 
     public abstract double getTotalPrice();
 

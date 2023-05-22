@@ -1,9 +1,8 @@
 package org.yearup.ui;
 
+import org.yearup.datastorages.ContractFileManager;
 import org.yearup.datastorages.DealershipFileManager;
-import org.yearup.models.Contract;
-import org.yearup.models.Dealership;
-import org.yearup.models.Vehicle;
+import org.yearup.models.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,7 +28,7 @@ public class UserInterface
 
             try
             {
-                int selection = getUserInputInt("Make a selection");
+                int selection = getUserInputInt("Make a selection: ");
                 System.out.println();
 
                 switch (selection) {
@@ -49,6 +48,8 @@ public class UserInterface
                     case 99 ->
                     { // exit
                         fileManager.saveDealership(dealership);
+                        System.out.println("Exiting....");
+                        System.out.println("Good Bye!");
                         return;
                     }
                     default -> System.out.println("Not a valid selection.");
@@ -56,17 +57,15 @@ public class UserInterface
             }
             catch(Exception ex)
             {
-                System.out.println("Please select a valid option.");
+                System.out.println("Please enter a valid option.");
             }
-
         }
-
     }
 
 
     public String getUserInputString(String message)
     {
-        System.out.print(message + ": ");
+        System.out.print(message);
         return userInput.nextLine().strip();
     }
 
@@ -135,7 +134,6 @@ public class UserInterface
         System.out.println("-------------------------------------------------------------------------------------------");
 
         displaySearchResults(results);
-
     }
 
     public void processGetByMakeModel()
@@ -278,9 +276,51 @@ public class UserInterface
         System.out.printf("Vehicle %d was successfully removed.\n", vin);
     }
 
-    private void processSaleOrLeaseVehicle()
+    public void processSaleOrLeaseVehicle()
     {
-        ArrayList<Contract> contracts = new ArrayList<>();
-    }
+        System.out.println("Sale or Lease Vehicle");
+        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println();
 
+        String contractType = getUserInputString("Enter the contract type (Sale or Lease): ");
+        String contractDate = getUserInputString("Enter the contract date (yyyymmdd): ");
+        String customerName = getUserInputString("Enter customer name: ");
+        String customerEmail = getUserInputString("Enter customer email: ");
+        int vin = getUserInputInt("Enter the VIN of vehicle: ");
+
+        // find the vehicle in the dealership
+        Vehicle vehicle = dealership.findByVin(vin);
+        if (vehicle == null)
+        {
+            System.out.printf("Vehicle with VIN %d was not found. \n", vin);
+        }
+        else
+        {
+            ContractFileManager contractFileManager = new ContractFileManager();
+            Contract contract;
+
+            if (contractType.equalsIgnoreCase("sale"))
+            {
+                String isFinanced = getUserInputString("Does contract has financed?(Yes or No): ");
+                contract = new SalesContract(contractDate, customerName, customerEmail, vehicle, isFinanced);
+                contractFileManager.saveContract(contract);
+
+                System.out.println("Completed Sale Contract.");
+            }
+            else if (contractType.equalsIgnoreCase("lease"))
+            {
+                contract = new LeaseContract(contractDate, customerName, customerEmail, vehicle);
+                contractFileManager.saveContract(contract);
+
+                System.out.println("Completed Lease Contract.");
+            }
+            else
+            {
+                System.out.println("Invalid contract type.");
+                displayHomeScreen();
+            }
+
+            dealership.removeVehicle(vehicle);
+        }
+    }
 }

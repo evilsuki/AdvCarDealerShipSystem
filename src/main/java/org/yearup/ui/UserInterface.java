@@ -288,39 +288,38 @@ public class UserInterface
         String customerEmail = getUserInputString("Enter customer email: ");
         int vin = getUserInputInt("Enter the VIN of vehicle: ");
 
+        ContractFileManager contractFileManager = new ContractFileManager();
+        Contract contract = null;
+
         // find the vehicle in the dealership
         Vehicle vehicle = dealership.findByVin(vin);
         if (vehicle == null)
         {
             System.out.printf("Vehicle with VIN %d was not found. \n", vin);
         }
+
+        if (contractType.equalsIgnoreCase("sale"))
+        {
+            String isFinanced = getUserInputString("Does contract has financed?(Yes or No): ");
+            contract = new SalesContract(contractDate, customerName, customerEmail, vehicle, isFinanced);
+            dealership.addContract(contract);
+
+            System.out.println("Completed Sale Contract.");
+        }
+        else if (contractType.equalsIgnoreCase("lease"))
+        {
+            contract = new LeaseContract(contractDate, customerName, customerEmail, vehicle);
+            dealership.addContract(contract);
+
+            System.out.println("Completed Lease Contract.");
+        }
         else
         {
-            ContractFileManager contractFileManager = new ContractFileManager();
-            Contract contract;
-
-            if (contractType.equalsIgnoreCase("sale"))
-            {
-                String isFinanced = getUserInputString("Does contract has financed?(Yes or No): ");
-                contract = new SalesContract(contractDate, customerName, customerEmail, vehicle, isFinanced);
-                contractFileManager.saveContract(contract);
-
-                System.out.println("Completed Sale Contract.");
-            }
-            else if (contractType.equalsIgnoreCase("lease"))
-            {
-                contract = new LeaseContract(contractDate, customerName, customerEmail, vehicle);
-                contractFileManager.saveContract(contract);
-
-                System.out.println("Completed Lease Contract.");
-            }
-            else
-            {
-                System.out.println("Invalid contract type.");
-                displayHomeScreen();
-            }
-
-            dealership.removeVehicle(vehicle);
+            System.out.println("Invalid contract type.");
+            displayHomeScreen();
         }
+
+        dealership.removeVehicle(vehicle);
+        contractFileManager.saveContract(contract);
     }
 }

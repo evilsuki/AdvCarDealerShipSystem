@@ -9,6 +9,7 @@ public class Dealership
     private String phone;
 
     private final ArrayList<Vehicle> vehicles;
+    private ArrayList<Contract> contracts;
 
     public Dealership(String name, String address, String phone)
     {
@@ -17,6 +18,7 @@ public class Dealership
         this.phone = phone;
 
         this.vehicles = new ArrayList<>();
+        this.contracts = new ArrayList<>();
     }
 
     public Dealership(String name, String address, String phone, ArrayList<Vehicle> inventory)
@@ -171,6 +173,11 @@ public class Dealership
     public void removeVehicle(Vehicle vehicle)
     {
         vehicles.remove(vehicle);
+    }
+
+    public void addContract(Contract contract)
+    {
+        contracts.add(contract);
     }
 
 

@@ -63,10 +63,6 @@ public abstract class Contract
         this.vehicleSoldInfo = vehicleSoldInfo;
     }
 
-//    public void addContract(Contract contract)
-//    {
-//        contracts.add(contract);
-//    }
 
     public abstract double getTotalPrice();
 

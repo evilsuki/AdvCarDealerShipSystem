@@ -11,22 +11,13 @@ public class Dealership
     private final ArrayList<Vehicle> vehicles;
     private ArrayList<Contract> contracts;
 
-    public Dealership(String name, String address, String phone)
-    {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-
-        this.vehicles = new ArrayList<>();
-        this.contracts = new ArrayList<>();
-    }
-
     public Dealership(String name, String address, String phone, ArrayList<Vehicle> inventory)
     {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.vehicles = inventory;
+        this.contracts = new ArrayList<>();
     }
 
     public String getName()

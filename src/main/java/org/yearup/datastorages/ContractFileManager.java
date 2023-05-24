@@ -115,7 +115,6 @@ public class ContractFileManager
         {
             try
             {
-                assert writer != null;
                 writer.close();
             }
             catch (Exception ex)

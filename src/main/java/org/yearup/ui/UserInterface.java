@@ -12,11 +12,14 @@ public class UserInterface
     Scanner userInput = new Scanner(System.in);
     private final DealershipFileManager fileManager;
     private final Dealership dealership;
+    private final ContractFileManager contractFileManager;
+
 
     public UserInterface()
     {
         fileManager = new DealershipFileManager();
         dealership = fileManager.getDealership();
+        contractFileManager = new ContractFileManager();
     }
 
     public void display()
@@ -91,7 +94,7 @@ public class UserInterface
         System.out.println("\t 3) Search by year range");
         System.out.println("\t 4) Search by color");
         System.out.println("\t 5) Search by mileage range");
-        System.out.println("\t 6) Search by type (sedan, truck , SUV, coupe");
+        System.out.println("\t 6) Search by type (sedan, truck , SUV, coupe)");
         System.out.println("\t 7) List all vehicles");
         System.out.println("\t 8) Add vehicle");
         System.out.println("\t 9) Remove vehicle");
@@ -288,7 +291,6 @@ public class UserInterface
         String customerEmail = getUserInputString("Enter customer email: ");
         int vin = getUserInputInt("Enter the VIN of vehicle: ");
 
-        ContractFileManager contractFileManager = new ContractFileManager();
         Contract contract = null;
 
         // find the vehicle in the dealership
